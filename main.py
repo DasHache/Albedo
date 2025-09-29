@@ -23,6 +23,7 @@ cs_role = "CS"
 valo_role = "Valo"
 peak_role = "Peak"
 over_role = 1421883935306027100
+chess_role = 1422330539108601916
 roleMessageId = 1421531983074426991
 
 FALLBACKS = [
@@ -61,6 +62,8 @@ def get_role(payload, guild):
             role = discord.utils.get(guild.roles, name=peak_role)
         case '🇴':
             role = discord.utils.get(guild.roles, id=over_role)
+        case '🇪':
+            role = discord.utils.get(guild.roles, id=chess_role)
         case _:
             role = discord.utils.get(guild.roles, name="Grosse folle")
     return role
