@@ -67,7 +67,7 @@ def get_role(payload, guild):
             role = discord.utils.get(guild.roles, id=over_role)
         case '🇪':
             role = discord.utils.get(guild.roles, id=chess_role)
-        case ':pencil2:' :
+        case '✏️' :
             role = discord.utils.get(guild.roles, name=draw_role)
         case _:
             role = discord.utils.get(guild.roles, name="Grosse folle")
