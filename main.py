@@ -4,6 +4,7 @@ import logging
 from dotenv import load_dotenv
 import os
 import random
+import datetime, asyncio
 
 load_dotenv()
 
@@ -24,7 +25,9 @@ valo_role = "Valo"
 peak_role = "Peak"
 over_role = 1421883935306027100
 chess_role = 1422330539108601916
+draw_role = 1431247748489023622
 roleMessageId = 1421531983074426991
+drawChannelId = 1431250828047552544
 
 FALLBACKS = [
     "https://i.pinimg.com/736x/d3/6c/e0/d36ce01c2ff2642c1315082687354a22.jpg",
@@ -64,6 +67,8 @@ def get_role(payload, guild):
             role = discord.utils.get(guild.roles, id=over_role)
         case '🇪':
             role = discord.utils.get(guild.roles, id=chess_role)
+        case ':pencil2:' :
+            role = discord.utils.get(guild.roles, name=draw_role)
         case _:
             role = discord.utils.get(guild.roles, name="Grosse folle")
     return role
@@ -135,6 +140,14 @@ async def on_raw_reaction_remove(payload):
     else:
         print("Member not found")
 
+async def send_daily_draw_reminder():
+    now = datetime.datetime.now()
+    then = now + datetime.timedelta(hours=24)
 
+    then.replace(hour=17, minute=0)
+    wait_time = (then - now).total_seconds()
+    await asyncio.sleep(wait_time)
+    channel = bot.get_channel(drawChannelId)
+    await channel.send(f"<@&{draw_role}> The time has come to create and practice! Raise your pencils and erasers! It is time to DRAW!!!")
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
